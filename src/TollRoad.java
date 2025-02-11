@@ -4,14 +4,19 @@
 // import java.util.Map;
 // import java.util.TreeMap;
 
+import java.util.Comparator;
+import java.util.TreeMap;
+
 /**
  * Application to demonstrate a TreeMap storing key:value pairs in sorted
  * order based on natural ordering of keys and also a different ordering
  * of the same keys based on the results of a Comparator.
  */
 public class TollRoad {
-    // TODO 1: Declare two Map variables to associate String keys with Vehicle objects.
-    // TODO 1: One will sort by vehicle description and one will sort by vehicle state.
+
+    private final TreeMap<String, Vehicle> vehicleTreeMapByDescription;
+    private final TreeMap<String, Vehicle> vehicleTreeMapByState;
+    private static final Comparator<String> stateComparator = Comparator.comparing(s -> s.substring(1,4));
 
 
 
@@ -21,9 +26,9 @@ public class TollRoad {
      * on the state code of each vehicle.
      */
     public TollRoad() {
-        // TODO 2: Create the two TreeMap objects, the second of which must be
-        // TODO 2: given an appropriate Comparator object when constructed.
 
+        vehicleTreeMapByDescription = new TreeMap<>();
+        vehicleTreeMapByState = new TreeMap<>(stateComparator);
 
     }
 
@@ -36,7 +41,15 @@ public class TollRoad {
      * @param description The Vehicle's description.
      */
     public void addToll(String description) {
-        // TODO 3: Complete this method as described in the exercise.
+
+        if (!vehicleTreeMapByDescription.containsKey(description)) {
+            vehicleTreeMapByDescription.put(description, new Vehicle(description));
+            vehicleTreeMapByState.put(description, vehicleTreeMapByDescription.get(description));
+
+        }else {
+            vehicleTreeMapByDescription.get(description).addToll();
+
+        }
 
     }
 
@@ -47,8 +60,13 @@ public class TollRoad {
      * @return String containing the current vehicles, sorted by description.
      */
     public String getVehicleReportByDescription() {
-        // TODO 4: Complete this method as described in the exercise.
-        return null;
+        //
+        StringBuilder sb = new StringBuilder();
+        for (Vehicle vehicle : vehicleTreeMapByDescription.values()) {
+            sb.append(vehicle);
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
     /**
@@ -58,8 +76,13 @@ public class TollRoad {
      * @return String containing the current vehicles, sorted by state.
      */
     public String getVehicleReportByState() {
-        // TODO 5: Complete this method as described in the exercise.
-        return null;
+
+        StringBuilder sb = new StringBuilder();
+        for (Vehicle vehicle : vehicleTreeMapByState.values()) {
+            sb.append(vehicle);
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
     /**

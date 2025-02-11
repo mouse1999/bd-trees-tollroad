@@ -11,7 +11,7 @@ public class Vehicle {
      * the two-letter state code in which the vehicle is registered.
      * The remaining characters are the vehicle's licence plate characters.
      */
-    public String description;
+    private String description;
     /**
      * This vehicle's current toll count. Initialized to 1 when a new
      * vehicle is created as that happens when the vehicle first passes
@@ -28,6 +28,10 @@ public class Vehicle {
     public Vehicle(String description) {
         this.description = description;
         this.tollCount = 1;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     /**
